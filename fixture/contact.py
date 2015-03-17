@@ -2,6 +2,7 @@ __author__ = 'nata'
 
 
 class ContactHelper:
+
     def __init__(self, app):
         self.app = app
 
