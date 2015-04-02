@@ -8,7 +8,6 @@ from fixture.contact import ContactHelper
 class Application:
     def __init__(self):
         self.wd = WebDriver()
-        self.wd.implicitly_wait(10)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
@@ -22,8 +21,9 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        # wd.get("http://dstation.local/addressbook/index.php")
-        wd.get("http://localhost/addressbook/index.php")
+        if not ("/index.php" in wd.current_url and len(wd.find_elements_by_name("add")) > 0):
+            # wd.get("http://dstation.local/addressbook/index.php")
+            wd.get("http://localhost/addressbook/index.php")
 
     def return_to_home_page(self):
         wd = self.wd
