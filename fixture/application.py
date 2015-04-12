@@ -27,7 +27,8 @@ class Application:
 
     def return_to_home_page(self):
         wd = self.wd
-        wd.find_element_by_link_text("home page").click()
+        if not ("/index.php" in wd.current_url and len(wd.find_elements_by_name("add")) > 0):
+            wd.find_element_by_link_text("home page").click()
 
     def destroy(self):
         self.wd.quit()
