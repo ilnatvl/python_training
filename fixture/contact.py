@@ -36,6 +36,7 @@ class ContactHelper:
         wd.find_element_by_link_text("add new").click()
         self.fill_contacts_form(contact)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.contact_cache = None
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
@@ -52,6 +53,7 @@ class ContactHelper:
         self.fill_contacts_form(contact)
         # submit changes to contact
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -59,22 +61,27 @@ class ContactHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_css_selector("input[value='Delete']").click()
         wd.switch_to_alert().accept()
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
         self.app.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.app.open_home_page()
-        contacts = []
-        for row in wd.find_elements_by_css_selector("tr[name=entry]"):
-            id = row.find_element_by_name("selected[]").get_attribute("value")
-            last_name = row.find_element_by_css_selector("td:nth-child(2)").text
-            first_name = row.find_element_by_css_selector("td:nth-child(3)").text
-            contacts.append(Contact(id=id, first_name=first_name, last_name=last_name))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.app.open_home_page()
+            self.contact_cache = []
+            for row in wd.find_elements_by_css_selector("tr[name=entry]"):
+                id = row.find_element_by_name("selected[]").get_attribute("value")
+                last_name = row.find_element_by_css_selector("td:nth-child(2)").text
+                first_name = row.find_element_by_css_selector("td:nth-child(3)").text
+                self.contact_cache.append(Contact(id=id, first_name=first_name, last_name=last_name))
+        return list(self.contact_cache)
+
 
 
 
