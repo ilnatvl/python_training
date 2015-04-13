@@ -50,7 +50,7 @@ class ContactHelper:
         wd = self.app.wd
         self.app.open_home_page()
         # edit first contact
-        wd.find_elements_by_css_selector("img[alt=\"Edit\"]")[index].click()
+        wd.find_elements_by_css_selector("img[alt='Edit']")[index].click()
         self.fill_contacts_form(contact)
         # submit changes to contact
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
