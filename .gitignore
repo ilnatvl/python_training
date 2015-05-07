@@ -54,4 +54,4 @@ docs/_build/
 target/
 
 # Test config files
-target.json
+*.json
