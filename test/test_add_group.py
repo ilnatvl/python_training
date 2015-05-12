@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
-from model.group import Group
+from model.group import Group, model_to_view
 
 
-def test_add_a_group(app, json_groups):
-    group = json_groups
-    old_groups = app.group.get_group_list()
+def test_add_a_group(app, orm, random_groups, check_ui):
+    group = random_groups
+    old_groups = orm.get_group_list()
     app.group.create(group)
-    assert len(old_groups) + 1 == app.group.count()
-    new_groups = app.group.get_group_list()
+    new_groups = orm.get_group_list()
     old_groups.append(group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+    if check_ui:
+        assert sorted(map(model_to_view, new_groups), key=Group.id_or_max) \
+            == sorted(app.group.get_group_list(), key=Group.id_or_max)
 

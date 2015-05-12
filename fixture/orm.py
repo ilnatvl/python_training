@@ -23,7 +23,23 @@ class ORMFixture:
         _table_ = 'addressbook'
         id = PrimaryKey(int, column='id')
         firstname = Optional(str, column='firstname')
+        middlename = Optional(str, column='middlename')
         lastname = Optional(str, column='lastname')
+        nickname = Optional(str, column='nickname')
+        company = Optional(str, column='company')
+        title = Optional(str, column='title')
+        address = Optional(str, column='address')
+        home = Optional(str, column='home')
+        mobile = Optional(str, column='mobile')
+        work = Optional(str, column='work')
+        fax = Optional(str, column='fax')
+        email = Optional(str, column='email')
+        email2 = Optional(str, column='email2')
+        email3 = Optional(str, column='email3')
+        homepage = Optional(str, column='homepage')
+        address2 = Optional(str, column='address2')
+        phone2 = Optional(str, column='phone2')
+        notes = Optional(str, column='notes')
         deprecated = Optional(datetime, column='deprecated')
         groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="contacts",
                      lazy=True)
@@ -40,7 +56,13 @@ class ORMFixture:
 
     def convert_contacts_to_model(self, contacts):
         def convert(contact):
-            return Contact(id=str(contact.id), first_name=contact.firstname, last_name=contact.lastname)
+            return Contact(id=str(contact.id), middle_name=contact.middlename, first_name=contact.firstname,
+                           last_name=contact.lastname, nickname=contact.nickname, company=contact.company,
+                           title=contact.title, address=contact.address, home_phone=contact.home,
+                           mobile_phone=contact.mobile, work_phone=contact.work, fax=contact.fax,
+                           email=contact.email, email2=contact.email2, email3=contact.email3,
+                           homepage=contact.homepage, address2=contact.address2, secondary_phone=contact.phone2,
+                           notes=contact.notes)
         return list(map(convert, contacts))
 
     @db_session
@@ -48,6 +70,10 @@ class ORMFixture:
         return self.convert_groups_to_model(select(g for g in ORMFixture.ORMGroup))
 
     @db_session
+    def get_group_for_id(self, id):
+        return self.convert_groups_to_model(select(g for g in ORMFixture.ORMGroup if g.id == id))
+
+    @db_session()
     def get_contact_list(self):
         return self.convert_contacts_to_model(select(c for c in ORMFixture.ORMContact if c.deprecated is None))
 

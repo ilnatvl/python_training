@@ -3,6 +3,10 @@ __author__ = 'nata'
 from sys import maxsize
 
 
+def model_to_view(g):
+    return Group(id=g.id, name=" ".join(g.name.split()))
+
+
 class Group:
 
     def __init__(self, name=None, header=None, footer=None, id=None):

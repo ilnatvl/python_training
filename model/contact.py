@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
-
 from sys import maxsize
+
+
+def model_to_view(c):
+    return Contact(
+        id=c.id, first_name=" ".join(c.first_name.split()),
+        last_name=" ".join(c.last_name.split()))
 
 
 class Contact:
