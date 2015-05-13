@@ -18,7 +18,7 @@ def random_multiline_text(prefix, maxrows=5):
 
 
 def random_phone():
-    return "+" + "".join(["%s" % random.randint(0, 9) for _ in range(0, 10)])
+    return "+" + "".join(["%s" % random.randint(1, 9) for _ in range(1, 10)])
 
 
 def random_email(prefix, maxlen=10):
@@ -44,14 +44,14 @@ testdata = [
         Contact(first_name=random_string("first name"), middle_name=random_string("middle name"),
                 last_name=random_string("last name"), nickname=random_string("nickname"),
                 title=random_string("title"),
-                company=random_string("company"), address=random_multiline_text("address"),
+                company=random_string("company"), address=random_string("address"),
                 home_phone=random_phone(),
                 mobile_phone=random_phone(), work_phone=random_phone(), fax=random_phone(),
-                address2=random_multiline_text("address2"), secondary_phone=random_phone(),
+                address2=random_string("address2"), secondary_phone=random_phone(),
                 email=random_email("email"),
                 email2=random_email("email2"), email3=random_email("email3"),
                 homepage=random_homepage("homepage"),
-                notes=random_multiline_text("notes"))
+                notes=random_string("notes"))
         for i in range(n)
     ]
 

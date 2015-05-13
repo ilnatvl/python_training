@@ -35,6 +35,7 @@ class ContactHelper:
         self.fill_contacts_form(contact)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.contact_cache = None
+        self.app.open_home_page()
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
@@ -76,6 +77,7 @@ class ContactHelper:
         # submit changes to contact
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
         self.contact_cache = None
+        self.app.open_home_page()
 
     def select_first_contact(self):
         self.select_contact_by_index(0)
@@ -151,7 +153,7 @@ class ContactHelper:
         return Contact(first_name=first_name, last_name=last_name, id=id,
                        home_phone=home_phone, work_phone=work_phone,
                        mobile_phone=mobile_phone, secondary_phone=secondary_phone,
-                        email=email, email2=email2, email3=email3, address=address)
+                       email=email, email2=email2, email3=email3, address=address)
 
 
 
